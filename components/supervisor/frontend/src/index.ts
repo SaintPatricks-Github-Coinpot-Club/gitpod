@@ -120,7 +120,16 @@ const toStop = new DisposableCollection();
                             desktopIdeLink: ideStatus.desktop.link,
                             desktopIdeLabel: ideStatus.desktop.label || "Open Desktop IDE"
                         });
-                        // window.open(ideStatus.desktop.link);
+                        try {
+                            const desktopLink = new URL(ideStatus.desktop.link)
+                            // redirect only if points to desktop application
+                            // don't navigate browser to another page
+                            if (desktopLink.protocol != 'http:/' && desktopLink.protocol != 'https:/') {
+                                window.location.href = ideStatus.desktop.link;
+                            }
+                        } catch(e) {
+                            console.error('invalid desktop link:', e)
+                        }
                         return loading.frame;
                     }
                 }

@@ -8,8 +8,15 @@ package ide
 
 // IDEConfig RawIDEConfig interface from components/server/src/ide-config.ts
 type IDEConfig struct {
-	SupervisorImage string     `json:"supervisorImage"`
-	IDEOptions      IDEOptions `json:"ideOptions"`
+	SupervisorImage string               `json:"supervisorImage"`
+	IDEOptions      IDEOptions           `json:"ideOptions"`
+	IDEClients      map[string]IDEClient `json:"clients"`
+}
+
+// IDEClient interface from components/server/src/ide-config.ts
+type IDEClient struct {
+	DefaultDesktopIDE string   `json:"defaultDesktopIDE,omitempty"`
+	DesktopIDEs       []string `json:"desktopIDEs,omitempty"`
 }
 
 // IDEOptions interface from components/gitpod-protocol/src/ide-protocol.ts
