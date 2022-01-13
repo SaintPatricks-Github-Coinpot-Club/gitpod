@@ -29,6 +29,7 @@ object ControllerStatusService {
                 requestTimeoutMillis = 2000
             }
             install(JsonFeature) {
+                // a comment to retrigger build
                 serializer = JacksonSerializer()
             }
         }
