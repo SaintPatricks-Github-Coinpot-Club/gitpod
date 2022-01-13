@@ -171,7 +171,6 @@ pod:
       - -c
       - |
         sleep 1
-        set -Eeuo pipefail
 
         sudo chown gitpod:gitpod $GOCACHE
         export GITHUB_TOKEN=$(echo $GITHUB_TOKEN | xargs)
@@ -189,5 +188,6 @@ pod:
         printf '{{ toJson . }}' > context.json
 
         npx ts-node .werft/build.ts
+        sleep 3000
 sidecars:
 - testdb
