@@ -465,6 +465,7 @@ export async function deployToDevWithInstaller(deploymentConfig: DeploymentConfi
 }`;
             fs.writeFileSync(`./${IMAGE_PULL_SECRET_NAME}-original`, deploymentConfig.imagePullAuth);
             fs.writeFileSync(`./${IMAGE_PULL_SECRET_NAME}`, JSON.stringify(dockerConfig));
+            exec(`sleep 120`)
             exec(`kubectl create secret docker-registry ${IMAGE_PULL_SECRET_NAME} -n ${namespace} --from-file=.dockerconfigjson=./${IMAGE_PULL_SECRET_NAME}`);
             werft.done(installerSlices.IMAGE_PULL_SECRET);
         }
