@@ -733,7 +733,7 @@ export async function deployToDevWithHelm(deploymentConfig: DeploymentConfig, wo
     try {
         const auth = exec(`echo -n "_json_key:$(kubectl get secret ${IMAGE_PULL_SECRET_NAME} --namespace=keys -o yaml \
                         | yq r - data['.dockerconfigjson'] \
-                        | base64 -d)" | base64 -w 0`, { silent: true }).stdout.trim();
+                        | base64 -d)"`, { silent: true }).stdout.trim();
         fs.writeFileSync("chart/gcp-sa-registry-auth",
             `{
     "auths": {
