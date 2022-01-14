@@ -551,7 +551,14 @@ export interface VSCodeConfig {
     extensions?: string[];
 }
 
+export interface SubRepository {
+    url: string;
+    checkoutLocation?: string;
+}
+
 export interface WorkspaceConfig {
+    parentRepository?: string;
+    subRepositories?: SubRepository[];
     image?: ImageConfig;
     ports?: PortConfig[];
     tasks?: TaskConfig[];

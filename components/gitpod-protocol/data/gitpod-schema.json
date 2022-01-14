@@ -136,6 +136,31 @@
             },
             "additionalProperties": false
         },
+        "subRepositories": {
+            "type": "array",
+            "description": "List of sub repositories that are part of this project.",
+            "items": {
+                "type": "object",
+                "required": [
+                    "url"
+                ],
+                "properties": {
+                    "url": {
+                        "type": ["string"],
+                        "description": "The url of the git repository to clone."
+                    },
+                    "checkoutLocation": {
+                        "type": "string",
+                        "description": "Path to where the repository should be checked out."
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "parentRepository": {
+            "type": "string",
+            "description": "The parent repository, containing the dev environment configuration."
+        },
         "checkoutLocation": {
             "type": "string",
             "description": "Path to where the repository should be checked out."
@@ -224,6 +249,7 @@
         },
         "experimentalNetwork": {
             "type": "boolean",
+            "deprecationMessage": "The 'experimentalNetwork' property is deprecated.",
             "description": "Experimental network configuration in workspaces (deprecated). Enabled by default"
         }
     },
