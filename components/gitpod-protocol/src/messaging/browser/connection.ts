@@ -6,7 +6,7 @@
  */
 
 import { Logger, ConsoleLogger, toSocket, IWebSocket } from "vscode-ws-jsonrpc";
-import { createMessageConnection } from "vscode-jsonrpc";
+import { createMessageConnection, Trace } from "vscode-jsonrpc";
 import { AbstractMessageWriter } from "vscode-jsonrpc/lib/messageWriter";
 import { AbstractMessageReader } from "vscode-jsonrpc/lib/messageReader";
 import { JsonRpcProxyFactory, JsonRpcProxy } from "../proxy-factory";
@@ -128,6 +128,9 @@ function createWebSocketConnection(resocket: ReconnectingWebSocket, logger: Logg
     const messageReader = new NonClosingWebSocketMessageReader(socket);
     const messageWriter = new BufferingWebSocketMessageWriter(resocket, logger);
     const connection = createMessageConnection(messageReader, messageWriter, logger);
+    connection.trace(Trace.Verbose, {
+        log: console.info.bind(console)
+    }, true)
     connection.onClose(() => connection.dispose());
     return connection;
 }
