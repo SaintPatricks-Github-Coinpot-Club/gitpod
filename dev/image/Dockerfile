@@ -2,9 +2,12 @@
 # Licensed under the GNU Affero General Public License (AGPL).
 # See License-AGPL.txt in the project root for license information.
 
+# if you want to run this image in a workspace, follow these steps:
+# gcloud auth configure-docker europe-docker.pkg.dev
+# gcloud auth login --no-launch-browser
 FROM europe-docker.pkg.dev/gitpod-artifacts/docker-dev/workspace-base-images:full
 
-ENV TRIGGER_REBUILD 18
+ENV TRIGGER_REBUILD 21
 
 USER root
 
@@ -29,9 +32,6 @@ RUN mkdir -p /usr/local/kubernetes/ && \
     && chown gitpod:gitpod -R /usr/local/kubernetes
 
 ENV PATH=$PATH:/usr/local/kubernetes/cluster/:/usr/local/kubernetes/client/bin/
-
-RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 15CF4D18AF4F7421 && \
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7EA0A9C3F273FCD8
 
 ### kubectl ###
 RUN curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
@@ -142,7 +142,7 @@ RUN sudo install-packages \
     python-dev \
     python-setuptools
 
-RUN bash -c "sudo pip uninstall crcmod; sudo pip install --no-cache-dir -U crcmod"
+RUN bash -c "pip uninstall crcmod; pip install --no-cache-dir -U crcmod"
 
 ### gitpod-core specific gcloud/kubectl config
 # Copy GCloud default config that points to gitpod-dev
@@ -162,7 +162,7 @@ ENV LEEWAY_WORKSPACE_ROOT=/workspace/gitpod
 ENV LEEWAY_REMOTE_CACHE_BUCKET=gitpod-core-leeway-cache-branch
 
 ### AWS Cli ###
-RUN sudo pip install --no-cache-dir awscli
+RUN pip install --no-cache-dir awscli
 
 # Install aws-iam-authenticator
 RUN sudo curl -fsSL -o aws-iam-authenticator "https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator" \

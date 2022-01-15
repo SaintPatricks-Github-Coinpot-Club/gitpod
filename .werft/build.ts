@@ -458,8 +458,7 @@ export async function deployToDevWithInstaller(deploymentConfig: DeploymentConfi
         try {
             werft.log(installerSlices.IMAGE_PULL_SECRET, "Adding the image pull secret to the namespace");
             const dockerConfig = { auths: { "eu.gcr.io": { auth: deploymentConfig.imagePullAuth }, "europe-docker.pkg.dev": { auth: deploymentConfig.imagePullAuth } } };
-            const stringifiedJson = JSON.stringify(dockerConfig);
-            exec(`echo ${stringifiedJson} > ./${IMAGE_PULL_SECRET_NAME}`);
+            fs.writeFileSync(`./${IMAGE_PULL_SECRET_NAME}`, JSON.stringify(dockerConfig));
             exec(`kubectl create secret docker-registry ${IMAGE_PULL_SECRET_NAME} -n ${namespace} --from-file=.dockerconfigjson=./${IMAGE_PULL_SECRET_NAME}`);
             werft.done(installerSlices.IMAGE_PULL_SECRET);
         }
